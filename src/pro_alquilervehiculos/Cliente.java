@@ -20,6 +20,8 @@ public class Cliente {
 
     private String codigoPostal;
 
+    private boolean baja;
+
     //constructores
     private Cliente(String dni, String nombre, String direccion, String localidad, String codigoPostal) {
 
@@ -40,39 +42,61 @@ public class Cliente {
         this.codigoPostal = OtroCliente.codigoPostal;
 
     }
-    
-    public String getDni(){
-    
-    return dni;
-    
-    } 
-    
-     public String getNombre(){
-     
-     return nombre;
-     
-     }
-          
-     public String getDireccion(){
-     return nombre;
-     
-     }
-     
-     public String getLocalidad(){
-     
-     return nombre;
-     }
-     
-     public String getCodigoPostal(){
-     
-     return codigoPostal;
-     }
+
+    public boolean getbaja() {
+
+        return baja;
+
+    }
+
+    public boolean setbaja() {
+
+        return baja;
+
+    }
+
+    public String getDni() {
+
+        return dni;
+
+    }
+
+    public String getNombre() {
+
+        return nombre;
+
+    }
+
+    public String getDireccion() {
+        return direccion;
+
+    }
+
+    public String getLocalidad() {
+
+        return localidad;
+    }
+
+    public String getCodigoPostal() {
+
+        return codigoPostal;
+    }
 
     @Override
     public String toString() {
-        return "Cliente{" + "dni=" + dni + ", nombre=" + nombre + ", direccion=" + direccion + ", localidad=" + localidad + ", codigoPostal=" + codigoPostal + '}';
+        String cadena = "";
+
+        if (baja == false) {
+
+            cadena
+                    = "\n dni: " + dni
+                    + "\n nombre: " + nombre
+                    + "\n direccion: " + direccion
+                    + "\n localidad: " + localidad
+                    + "\n codigoPostal: " + codigoPostal;
+
+        }
+        return cadena;
     }
-     
-    
-     
+
 }
