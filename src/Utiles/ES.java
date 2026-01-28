@@ -17,6 +17,7 @@ public class ES {
         do {
             try {
                 System.out.print(_msg);
+                System.out.println("");
                 num = Byte.parseByte(s.nextLine());
 
                 if (num >= _min && num <= _max) {
@@ -41,6 +42,7 @@ public class ES {
         do {
             try {
                 System.out.print(_msg);
+                System.out.println("");
                 num = Integer.parseInt(s.nextLine());
 
                 datoValido = true;

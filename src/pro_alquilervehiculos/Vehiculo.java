@@ -54,8 +54,8 @@ public class Vehiculo {
         return cilindrada;
     }
 
-    public void isDisponible(boolean disponible) {
-        this.disponible = disponible;
+    public boolean isDisponible() {
+        return disponible;
     }
 
     @Override
