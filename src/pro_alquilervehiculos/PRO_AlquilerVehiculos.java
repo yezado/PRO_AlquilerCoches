@@ -12,17 +12,17 @@ import Utiles.ES;
  */
 public class PRO_AlquilerVehiculos {
 
-    private final int MAX_ALQUILERES = 50;
-    private final int MAX_CLIENTES = 50;
-    private final int MAX_VEHICULOS = 50;
+    private final static int MAX_ALQUILERES = 50;
+    private final static int MAX_CLIENTES = 50;
+    private final static int MAX_VEHICULOS = 50;
 
-    private Cliente[] cliente;
-    private Vehiculo[] vehiculo;
-    private Alquiler[] alquileres;
+    private static Cliente[] cliente;
+    private static Vehiculo[] vehiculo;
+    private static Alquiler[] alquileres;
 
-    private int numVehiculos;
-    private int numClientes;
-    private int numAlquileres;
+    private static int numVehiculos;
+    private static int numClientes;
+    private static int numAlquileres;
 
     //contructores
     public PRO_AlquilerVehiculos() {
@@ -36,22 +36,59 @@ public class PRO_AlquilerVehiculos {
     public static void main(String[] args) {
 
         int opcion;
+
+        opcion = ES.leerentero("Introduce una opcion del menu", 0, 9);
         
-        opcion = ES.leerentero("Introduce opcion premo", 0, 9);
-        
-        switch(opcion){
-            case 1: getcliente(dnic);
-        
-        
+        do{
+        switch (opcion) {
+            case 1:
+                String dni = ES.leerCadena("introduzca el dni del Cliente");
+                String nombre = ES.leerCadena("introduzca el nombre del Cliente");
+                String direccion = ES.leerCadena("introduzca la direccion del Cliente");
+                String localidad = ES.leerCadena("introduzca la localidad del Cliente");
+                String codigoPostal = ES.leerCadena("introduzca el codigo postal del Cliente");
+                Cliente c = new Cliente(dni, nombre, direccion, localidad, codigoPostal);
+                añadirCliente(c);
+                break;
+            case 2:
+                
+            case 3:
+                String matricula = ES.leerCadena("introduzca la matricula del vehiculo");
+                String marca = ES.leerCadena("introduzca la marca del vehiculo");
+                String modelo = ES.leerCadena("introduzca el modelo del vehiculo");
+                int cilindrada = ES.leerByte("introduzca la cilindrada del vehiculo");
+                Vehiculo v = new Vehiculo(matricula, marca, modelo, cilindrada);
+                añadirVehiculo(v);
+                break;
+            case 4:
+                
+            case 5:
+                dni = "";
+                borrarCliente(dni);
+                break;
+            case 6:
+                matricula = "";
+                borrarVehiculo(matricula);
+                break;
+            case 7:
+                dnic = ES.leerCadena("introduzca el DNI del cliente");
+                matricula = ES.leerCadena("introduzca el numero de la matricula");
+                Cliente payo = getCliente(dnic);
+                Vehiculo gitano = getVehiculo(matricula);
+                nuevoAlquiler(payo, gitano);
+                break;
+            case 8:
+                listarVehiculo();
+                break;
+            case 9:
+                listarCliente();
+                break;
+
         }
-        
-        
-        
-        
-        ES.escribirLn("Cliente");
+        }while(opcion != 0);
     }
 
-    private Cliente getCliente(String dnic) {
+    private static Cliente getCliente(String dnic) {
 
         for (int i = 0; i < MAX_CLIENTES; i++) {
             if (cliente[i].getDni().equals(dnic)) {
@@ -63,7 +100,7 @@ public class PRO_AlquilerVehiculos {
         return null;
     }
 
-    private Vehiculo getVehiculo(String matricula) {
+    private static Vehiculo getVehiculo(String matricula) {
 
         for (int i = 0; i < MAX_VEHICULOS; i++) {
             if (vehiculo[i].getMatricula().equals(matricula)) {
@@ -75,7 +112,7 @@ public class PRO_AlquilerVehiculos {
         return null;
     }
 
-    private void añadirCliente(Cliente c) {
+    private static void añadirCliente(Cliente c) {
         boolean b = false;
         for (int i = 0; i < MAX_CLIENTES && !b; i++) {
             if (numClientes < MAX_CLIENTES) {
@@ -98,7 +135,7 @@ public class PRO_AlquilerVehiculos {
 
     }
 
-    private void añadirVehiculo(Vehiculo v) {
+    private static void añadirVehiculo(Vehiculo v) {
         boolean b = false;
         for (int i = 0; i < MAX_VEHICULOS && !b; i++) {
             if (numVehiculos < MAX_VEHICULOS) {
@@ -121,11 +158,11 @@ public class PRO_AlquilerVehiculos {
 
     }
 
-    private void borrarVehiculo(Vehiculo v) {
+    private static void borrarVehiculo(String v) {
 
         for (int i = 0; i < MAX_VEHICULOS; i++) {
 
-            if (vehiculo[i].equals(v.getMatricula())) {
+            if (vehiculo[i].getMatricula().equals(v)) {
                 vehiculo[i] = null;
                 numVehiculos--;
             }
@@ -134,7 +171,7 @@ public class PRO_AlquilerVehiculos {
 
     }
 
-    private void nuevoAlquiler(Cliente c, Vehiculo v) {
+    private static void nuevoAlquiler(Cliente c, Vehiculo v) {
 
         v.isDisponible();
 
@@ -155,4 +192,63 @@ public class PRO_AlquilerVehiculos {
 
     }
 
+    private static void borrarCliente(String c) {
+
+        for (int i = 0; i < MAX_CLIENTES; i++) {
+
+            if (cliente[i].getDni().equals(c)) {
+                cliente[i] = null;
+                numClientes--;
+            }
+
+        }
+
+    }
+
+    private static void listarCliente() {
+
+        for (int i = 0; i < MAX_CLIENTES; i++) {
+
+            ES.escribirLn(cliente[i].toString());
+
+        }
+
+    }
+    
+    private static void listarVehiculo() {
+
+        for (int i = 0; i < MAX_VEHICULOS; i++) {
+
+            ES.escribirLn(vehiculo[i].toString());
+
+        }
+
+    }
+    
+    
+    private static void cerrarAlquiler(){
+    
+    
+    
+    
+    
+    
+    
+    }
+    private static void Menu(){
+    
+    ES.escribirLn("1. añadir cliente");
+    ES.escribirLn("2. );
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    ES.escribirLn(_cadena);
+    
+    
+    
+    
+    }
 }

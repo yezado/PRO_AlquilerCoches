@@ -23,7 +23,7 @@ public class Cliente {
     private boolean baja;
 
     //constructores
-    private Cliente(String dni, String nombre, String direccion, String localidad, String codigoPostal) {
+    public Cliente(String dni, String nombre, String direccion, String localidad, String codigoPostal) {
 
         this.dni = dni;
         this.nombre = nombre;
@@ -33,7 +33,7 @@ public class Cliente {
 
     }
 
-    private Cliente(Cliente OtroCliente) {
+    public Cliente(Cliente OtroCliente) {
 
         this.dni = OtroCliente.dni;
         this.nombre = OtroCliente.nombre;
