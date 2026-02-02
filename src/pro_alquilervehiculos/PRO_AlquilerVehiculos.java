@@ -37,55 +37,76 @@ public class PRO_AlquilerVehiculos {
 
         int opcion;
 
-        opcion = ES.leerentero("Introduce una opcion del menu", 0, 9);
-        
-        do{
-        switch (opcion) {
-            case 1:
-                String dni = ES.leerCadena("introduzca el dni del Cliente");
-                String nombre = ES.leerCadena("introduzca el nombre del Cliente");
-                String direccion = ES.leerCadena("introduzca la direccion del Cliente");
-                String localidad = ES.leerCadena("introduzca la localidad del Cliente");
-                String codigoPostal = ES.leerCadena("introduzca el codigo postal del Cliente");
-                Cliente c = new Cliente(dni, nombre, direccion, localidad, codigoPostal);
-                añadirCliente(c);
-                break;
-            case 2:
-                
-            case 3:
-                String matricula = ES.leerCadena("introduzca la matricula del vehiculo");
-                String marca = ES.leerCadena("introduzca la marca del vehiculo");
-                String modelo = ES.leerCadena("introduzca el modelo del vehiculo");
-                int cilindrada = ES.leerByte("introduzca la cilindrada del vehiculo");
-                Vehiculo v = new Vehiculo(matricula, marca, modelo, cilindrada);
-                añadirVehiculo(v);
-                break;
-            case 4:
-                
-            case 5:
-                dni = "";
-                borrarCliente(dni);
-                break;
-            case 6:
-                matricula = "";
-                borrarVehiculo(matricula);
-                break;
-            case 7:
-                dnic = ES.leerCadena("introduzca el DNI del cliente");
-                matricula = ES.leerCadena("introduzca el numero de la matricula");
-                Cliente payo = getCliente(dnic);
-                Vehiculo gitano = getVehiculo(matricula);
-                nuevoAlquiler(payo, gitano);
-                break;
-            case 8:
-                listarVehiculo();
-                break;
-            case 9:
-                listarCliente();
-                break;
+        do {
+            
+            
+            Menu();
+            opcion = ES.leerentero("Introduce una opcion del menu", 0, 9);
+            switch (opcion) {
+                case 1:
+                    String dni = ES.leerCadena("introduzca el dni del Cliente");
+                    String nombre = ES.leerCadena("introduzca el nombre del Cliente");
+                    String direccion = ES.leerCadena("introduzca la direccion del Cliente");
+                    String localidad = ES.leerCadena("introduzca la localidad del Cliente");
+                    String codigoPostal = ES.leerCadena("introduzca el codigo postal del Cliente");
+                    Cliente c = new Cliente(dni, nombre, direccion, localidad, codigoPostal);
+                    añadirCliente(c);
+                    break;
+                case 2:
 
-        }
-        }while(opcion != 0);
+                case 3:
+                    String matricula = ES.leerCadena("Introduce la matricula").toUpperCase();
+
+                    if (!Utiles.comprobarMatricula(matricula)) {
+                        ES.escribirLn("Matricula incorrecta (formato 0000AAA)");
+                        break;
+                    } else {
+                    }
+
+                    String marca = ES.leerCadena("Introduce la marca");
+                    String modelo = ES.leerCadena("Introduce el modelo");
+                    int cilindrada = ES.leerEntero("Introduce la cilindrada");
+                    Vehiculo v = new Vehiculo(matricula, marca, modelo, cilindrada);
+                    añadirVehiculo(v);
+                    break;
+
+                case 4:
+                    listarVehiculo();
+                    break;
+                case 5:
+                    dni = "";
+                    borrarCliente(dni);
+                    break;
+
+                case 6: // Borrar vehiculo
+                    matricula = ES.leerCadena("Introduce la matricula del vehiculo a borrar");
+                    borrarVehiculo(matricula);
+                    break;
+
+                case 7: // Abrir alquiler
+                    String dnic = ES.leerCadena("Introduce el DNI del cliente");
+                    matricula = ES.leerCadena("Introduce la matricula del vehiculo");
+
+                    Cliente cli = getCliente(dnic);
+                    Vehiculo veh = getVehiculo(matricula);
+
+                    nuevoAlquiler(cli, veh);
+                    break;
+
+                case 8: // Cerrar alquiler
+                    cerrarAlquiler();
+                    break;
+
+                case 9: // Listar alquileres
+                    listarAlquileres();
+                    break;
+
+                case 0:
+                    ES.escribirLn("Saliendo del programa...");
+                    break;
+            }
+
+        } while (opcion != 0);
     }
 
     private static Cliente getCliente(String dnic) {
@@ -214,7 +235,7 @@ public class PRO_AlquilerVehiculos {
         }
 
     }
-    
+
     private static void listarVehiculo() {
 
         for (int i = 0; i < MAX_VEHICULOS; i++) {
@@ -224,31 +245,48 @@ public class PRO_AlquilerVehiculos {
         }
 
     }
-    
-    
-    private static void cerrarAlquiler(){
-    
-    
-    
-    
-    
-    
-    
+
+    private static void cerrarAlquiler() {
+
+        String dnic = ES.leerCadena("DNI del cliente");
+        String matricula = ES.leerCadena("Matricula del vehiculo");
+
+        for (int i = 0; i < numAlquileres; i++) {
+            if (alquileres[i].getCliente().getDni().equals(dnic)
+                    && alquileres[i].getVehiculo().getMatricula().equals(matricula)) {
+
+                alquileres[i].Cerrar();
+                ES.escribirLn("Alquiler cerrado. Precio: " + alquileres[i].precioAlquiler());
+                return;
+            }
+        }
+        ES.escribirLn("No se encontro el alquiler");
     }
-    private static void Menu(){
-    
-    ES.escribirLn("1. añadir cliente");
-    ES.escribirLn("2. );
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    ES.escribirLn(_cadena);
-    
-    
-    
-    
+
+    private static void listarAlquileres() {
+        if (numAlquileres == 0) {
+            ES.escribirLn("No hay alquileres");
+            return;
+        }
+
+        for (int i = 0; i < numAlquileres; i++) {
+            ES.escribirLn(alquileres[i].toString());
+        }
     }
+
+    private static void Menu() {
+        
+        ES.escribirLn("1. Añadir cliente");
+        ES.escribirLn("2. Listar clientes");
+        ES.escribirLn("3. Añadir vehiculo");
+        ES.escribirLn("4. Listar vehiculos");
+        ES.escribirLn("5. Borrar cliente");
+        ES.escribirLn("6. Borrar vehiculo");
+        ES.escribirLn("7. Abrir alquiler");
+        ES.escribirLn("8. Cerrar alquiler");
+        ES.escribirLn("9. Listar alquileres");
+        ES.escribirLn("0. Salir");
+        
+    }
+
 }

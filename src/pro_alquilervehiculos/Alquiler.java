@@ -43,8 +43,8 @@ public class Alquiler {
     public Cliente getCliente() {
         return cliente;
     }
-
-    public Vehiculo getTurismo() {
+    
+    public Vehiculo getVehiculo() {
         return turismo;
     }
 
